@@ -1,0 +1,22 @@
+image: python:3.7-alpine
+
+test:
+  stage: test
+  script:
+  - pip install -U sphinx sphinx-autobuild sphinx_rtd_theme 
+  - sphinx-build -b html source public
+  only:
+  - branches
+  except:
+  - main
+
+pages:
+  stage: deploy
+  script:
+  - pip install -U sphinx sphinx-autobuild sphinx_rtd_theme 
+  - sphinx-build -b html source public
+  artifacts:
+    paths:
+    - public
+  only:
+  - main
